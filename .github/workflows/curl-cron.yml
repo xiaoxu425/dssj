@@ -2,7 +2,7 @@ name: Curl Multiple URLs Every Minute
 
 on:
   schedule:
-    - cron: '*/1 * * * *'  # 每分钟执行一次
+    - cron: '0 */12 * * *'  # 每分钟执行一次
   workflow_dispatch:
 
 jobs:
