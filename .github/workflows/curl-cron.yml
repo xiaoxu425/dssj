@@ -1,14 +1,24 @@
-name: Curl Countdown Status Every Minute
+name: Curl Multiple URLs Every Minute
 
 on:
   schedule:
     - cron: '*/1 * * * *'  # 每分钟执行一次
-  workflow_dispatch:       # 允许手动触发
+  workflow_dispatch:
 
 jobs:
   curl_job:
     runs-on: ubuntu-latest
     steps:
-      - name: Curl target URL
+      - name: Curl all target URLs
         run: |
-          curl -sSL -w "HTTP_CODE:%{http_code}\n" https://ancient-wood-b5b5-cs.vpnf00012.workers.dev/countdown-status
+          # 在下面的数组中添加或删除需要curl的地址，每行一个
+          urls=(
+            "https://ancient-wood-b5b5-cs.vpnf00012.workers.dev/countdown-status" # 测试
+            #"https://ancient-wood-b5b5-cs.vpnf00012.workers.dev/count"
+            #"https://ancient-wood-b5b5-cs.vpnf00012.workers.dev"
+            # 例如添加新地址："https://your-new-url.com"
+          )
+          for url in "${urls[@]}"; do
+            echo "Curling $url"
+            curl -sSL -w "HTTP_CODE:%{http_code}\n" "$url"
+          done
