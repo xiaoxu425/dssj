@@ -1,0 +1,14 @@
+name: Curl Countdown Status Every Minute
+
+on:
+  schedule:
+    - cron: '*/1 * * * *'  # 每分钟执行一次
+  workflow_dispatch:       # 允许手动触发
+
+jobs:
+  curl_job:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Curl target URL
+        run: |
+          curl -sSL -w "HTTP_CODE:%{http_code}\n" https://ancient-wood-b5b5-cs.vpnf00012.workers.dev/countdown-status
